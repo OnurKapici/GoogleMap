@@ -2,84 +2,6 @@
 
     Layout = null;
 }
-@*
-
-    <!DOCTYPE html>
-
-    <html>
-
-    <head>
-
-        <title>Onur KAPICI</title>
-
-
-        <style>
-            #map {
-                width: 1280px;
-                height: 960px;
-                margin: auto;
-            }
-        </style>
-
-    </head>
-
-    <body>
-        <h1>Onur Harita</h1>
-
-
-        <div id="map_canvas" class="section contact-map"></div>
-
-
-
-
-            @section scripts{
-                <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAJyYNp6gK3IrXp_Xi3wPdmJNNvATrklpo"></script>
-                <script type="text/javascript">
-        function initialize() {
-            var canvas = $("#map_canvas");
-            var lng = 40.9449108;
-            var lat = 29.2909245;
-            var mapTitle = "Deneme";
-            var latlng = new google.maps.LatLng(lat, lng);
-            var options = {
-                scrollwheel: false,
-                zoom: 16,
-                center: latlng,
-                mapTypeId: google.maps.MapTypeId.ROADMAP
-            };
-
-
-            infowindow = new google.maps.InfoWindow({ content: mapTitle });
-
-            var map = new google.maps.Map(canvas[0], options);
-
-
-            var marker = new google.maps.Marker({
-                position: new google.maps.LatLng(lat, lng),
-                map: map
-            });
-            marker.addListener('click', function () {
-                infowindow.open(map, marker);
-
-            });
-
-            infowindow.open(map, marker);
-
-
-        }
-        $(function () {
-            initialize();
-            });
-
-
-
-            </script>
-            }
-
-
-    </body>
-
-    </html>*@
 
 <!DOCTYPE html>
 <html>
@@ -94,25 +16,78 @@
 <body>
     <h3>OnurKAPICI</h3>
     <div id="map"></div>
+    ---------------------
+
+    <button onclick="goMap()">Git</button>
+
     <script>
+        
+        var mapLat = 40.990444;
+        var mapLng = 29.029145;
+
         function initMap() {
-            var uluru = { lat: 40.9449108, lng: 29.2909245 };
+
+            var mapTitle="kapıcı"
+
+            var uluru = { lat: mapLat, lng: mapLng };
             var map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 10,
+                zoom: 15,
                 center: uluru
             });
             var marker = new google.maps.Marker({
                 position: uluru,
-                map: map
-                
+                map: map,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+
+
+
             });
 
+            infowindow = new google.maps.InfoWindow({ content: mapTitle });
+            marker.addListener('click', function () {
+                infowindow.open(map, marker);
+            });
+
+
+
+
         }
+
+        function goMap() {
+
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition);
+            }
+
+
+            function showPosition(position) {
+
+                alert("Yol Tarifi İçin Google Haritalara Yönlendiriliyorsunuz -" + position.coords.latitude + "--" + position.coords.longitude);
+
+               
+
+                window.open('https://www.google.com.tr/maps/dir/' + position.coords.latitude + ',' + position.coords.longitude + '/' + mapLat + ',' + mapLng + '/@@' + mapLat + ',' + mapLng + ',10z');
+
+
+            }
+                   
+                    
+            
+           
+            
+            
+                
+        }
+
+
+
+
 
     </script>
     <script async defer
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD0bL34wg4_96sYq5ZoHAXCUijemaOP6lI&callback=initMap">
     </script>
+
 </body>
 </html>
 
